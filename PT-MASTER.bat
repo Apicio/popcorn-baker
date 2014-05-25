@@ -212,12 +212,6 @@ IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%.exe" MOVE /Y "%INSTAL
 IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"
 IF EXIST "%nodejsWork%" RMDIR /s /q "%nodejsWork%"
 
-ECHO LETS BUILD DEV VERSION...
-ping 1.1.1.1 -n 1 -w 3000 > nul
-CALL PT-BETA.bat
-ECHO.
-GOTO EOF
-
 ::::::::::::::::::::::::::::::::::::::::
 :EOF
 ::::::::::::::::::::::::::::::::::::::::
