@@ -21,7 +21,7 @@ SET PUB=C:\POPCORN-TIME-BUILDS
 SET makeNsis=C:\PROGRA~1\NSIS
 
 :: POPCORN APP DOWNLOAD (no edits necessary)
-SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/dev-0.3.zip
+SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/%PT_BETA%.zip
 SET popcornZip=popcorn-app.zip
 
 :: NODEJS VARS (no edits necessary)
