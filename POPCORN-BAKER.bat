@@ -20,7 +20,7 @@ SET PUB=C:\POPCORN-TIME-BUILDS
 :: PATHS NSIS - http://nsis.sourceforge.net/Main_Page
 SET makeNsis=C:\PROGRA~1\NSIS
 
-:: POPCORN APP DOWNLOAD
+:: POPCORN APP DOWNLOAD (no edits necessary)
 SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/dev-0.3.zip
 SET popcornZip=popcorn-app.zip
 
