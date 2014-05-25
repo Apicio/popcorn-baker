@@ -89,13 +89,13 @@ msiexec /a "%TEMP%\%nodejsMsiPackage%" /qn TARGETDIR="%nodejsPath%"
 XCOPY "%nodejsPath%\nodejs" "%nodejsPath%" /s /e /i /h /y
 
 :: CLEANUP
-RMDIR /s /q "%nodejsPath%\nodejs"
-RMDIR /s /q "%TEMP%"
+IF EXIST "%nodejsPath%\nodejs" RMDIR /s /q "%nodejsPath%\nodejs"
+IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"
 IF EXIST "%nodejsPath%\%nodejsMsiPackage%" DEL "%nodejsPath%\%nodejsMsiPackage%"
 
 :: FINISH INSTALLATION
 ECHO.
-IF EXIST "%nodejsPath%\node.exe" ECHO Portable Popcorn App (node.js) successfully installed in '%nodejsPath%'
+IF EXIST "%nodejsPath%\node.exe" ECHO Node.js successfully installed in '%nodejsPath%'
 IF NOT EXIST "%nodejsPath%\node.exe" ECHO An error occurred during the installation.
 GOTO POPCORN-INSTALL
 
