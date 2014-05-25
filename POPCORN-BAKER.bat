@@ -4,7 +4,7 @@ SETLOCAL EnableDelayedExpansion
 TITLE POPCORN-TIME BAKER
 
 :: POPCORN-TIME BAKER
-:: VERSION: 0.8
+:: VERSION: 0.9
 
 :: NODEJS VERSION
 SET nodejsVersion=0.10.28
@@ -15,10 +15,10 @@ SET PT_VERSION=0.3.1-Win-32
 SET PT_BETA=dev-0.3
 
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
-SET PUB=H:\Downloads\TEST
+SET PUB=C:\POPCORN-TIME-BUILDS
 
-:: PATHS NSIS
-SET makeNsis=P:\PROGRA~1\NSIS
+:: PATHS NSIS - http://nsis.sourceforge.net/Main_Page
+SET makeNsis=C:\PROGRA~1\NSIS
 
 :: POPCORN APP DOWNLOAD
 SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/dev-0.3.zip
@@ -200,7 +200,7 @@ IF EXIST "%INSTALLERWIN%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLE
 :: BUILD - DEV UPDATER
 IF EXIST "%INSTALLERWIN%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERWIN%\updater.nsi"
 
-:: CREATE DIR TO MOVE POPCORN TO THE CLOUD
+:: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
 :: DEV-INSTALLER
