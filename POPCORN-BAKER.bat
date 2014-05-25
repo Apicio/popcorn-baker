@@ -102,7 +102,7 @@ GOTO POPCORN-INSTALL
 ::::::::::::::::::::::::::::::::::::::::
 :POPCORN-INSTALL
 ::::::::::::::::::::::::::::::::::::::::
-IF NOT EXIST "%nodejsPath%\node.exe" ECHO Portable Popcorn App (node.js) is not installed... Please install first... && GOTO EOF
+IF NOT EXIST "%nodejsPath%\node.exe" ECHO Node.js is not installed... Please install first... && GOTO EOF
 
 :: CREATE TEMP DIR
 SET TEMP=%nodejsPath%\tmp
