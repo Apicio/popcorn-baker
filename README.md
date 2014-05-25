@@ -17,6 +17,8 @@ And edit these lines:
 If you get an Node.js module install error, edit your Edit Environment Variables in Windows.
 Add your Popcorn-Baker folder to the Environment Variables, example: C:\Popcorn-Baker-master
 
+![path](http://www.nextofwindows.com/wp-content/uploads/2010/05/add_to_PATH.png)
+
 More info about Editting Environment Variables: http://www.nextofwindows.com/how-to-addedit-environment-variables-in-windows-7/
 
 
