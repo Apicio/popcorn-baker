@@ -4,7 +4,7 @@ SETLOCAL EnableDelayedExpansion
 TITLE POPCORN-TIME BAKER
 
 :: POPCORN-TIME BAKER
-:: VERSION: 1.0
+:: VERSION: 1.1
 
 :: NODEJS VERSION
 SET nodejsVersion=0.10.28
@@ -18,7 +18,7 @@ SET PT_BETA=master
 SET PUB=C:\POPCORN-TIME-BUILDS
 
 :: PATHS NSIS - http://nsis.sourceforge.net/Main_Page
-SET makeNsis=C:\PROGRA~1\NSIS
+SET makeNsis=C:\PROGRA~2\NSIS
 
 :: POPCORN APP DOWNLOAD (no edits necessary)
 SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/%PT_BETA%.zip
@@ -130,7 +130,7 @@ ECHO end with >>%popcornVbs%
 cscript.exe /NoLogo %popcornVbs%
 
 :: IF EXIST, CLEAN UP FIRST
-FOR /D %%X IN (%nodejsWork%\popcorn-app*) DO RD /S /Q "%%X"
+IF EXIST "%nodejsWork%\popcorn-app-%PT_BETA%" RMDIR /S /Q "%nodejsWork%\popcorn-app-%PT_BETA%"
 
 :: PREPARE CSCRIPT EXTRACT
 ECHO ZipFile="%TEMP%\%popcornZip%" >%UnzipVbs%
@@ -165,28 +165,16 @@ IF NOT EXIST "%npmPath%\cache" MKDIR "%npmPath%\cache"
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod1%
-ECHO SET PT_BETA=%PT_BETA% >>%installMod1%
-ECHO SET nodejsPath=%~dp0 >>%installMod1%
-ECHO SET nodejsPath=!nodejsPath:~0,-1! >>%installMod1%
-ECHO SET nodejsWork=%nodejsPath%\work >>%installMod1%
 ECHO cd "%nodejsWork%\popcorn-app-%PT_BETA%\" >>%installMod1%
 ECHO npm install -g grunt-cli bower >>%installMod1%
 
 ECHO @ECHO OFF >%installMod2%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod2%
-ECHO SET PT_BETA=%PT_BETA% >>%installMod2%
-ECHO SET nodejsPath=%~dp0 >>%installMod2%
-ECHO SET nodejsPath=!nodejsPath:~0,-1! >>%installMod2%
-ECHO SET nodejsWork=%nodejsPath%\work >>%installMod2%
 ECHO cd "%nodejsWork%\popcorn-app-%PT_BETA%" >>%installMod2%
 ECHO npm install >>%installMod2%
 
 ECHO @ECHO OFF >%installMod3%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod3%
-ECHO SET PT_BETA=%PT_BETA% >>%installMod3%
-ECHO SET nodejsPath=%~dp0 >>%installMod3%
-ECHO SET nodejsPath=!nodejsPath:~0,-1! >>%installMod3%
-ECHO SET nodejsWork=%nodejsPath%\work >>%installMod3%
 ECHO cd "%nodejsWork%\popcorn-app-%PT_BETA%\" >>%installMod3%
 ECHO grunt build >>%installMod3%
 
