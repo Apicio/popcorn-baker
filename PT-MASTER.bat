@@ -11,7 +11,7 @@ SET nodejsVersion=0.10.28
 SET nodejsArch=x86
 
 :: POPCORN VERSION
-SET PT_VERSION=0.3.1-Win-32
+SET PT_VERSION=0.3.1
 SET PT_BETA=master
 
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
@@ -195,18 +195,17 @@ CALL %installMod1%
 CALL %installMod2%
 CALL %installMod3%
 
-:: BUILD - DEV INSTALLER
+:: BUILD
 IF EXIST "%INSTALLERWIN%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERWIN%\installer.nsi"
-:: BUILD - DEV UPDATER
 IF EXIST "%INSTALLERWIN%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERWIN%\updater.nsi"
 
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
-:: DEV-INSTALLER
-IF EXIST "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%.exe" MOVE /Y "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%.exe" "%PUB%\"
-:: DEV-UPDATER
-IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%.exe" MOVE /Y "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%.exe" "%PUB%\"
+:: INSTALLER
+IF EXIST "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-32.exe" MOVE /Y "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-32.exe" "%PUB%\"
+:: UPDATER
+IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" MOVE /Y "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" "%PUB%\"
 
 :: CLEANUP
 IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"
