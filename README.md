@@ -1,6 +1,7 @@
 Popcorn-Baker
 =============
 Easy script to bake Popcorn-Time for Windows
+Official repo: https://github.com/popcorn-official/popcorn-app
 
 ## Requirements
 Download and install NSIS: http://nsis.sourceforge.net/Download
