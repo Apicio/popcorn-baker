@@ -19,6 +19,8 @@ And edit these lines:
 ###Video tutorial
 [![Video tutorial](http://img.youtube.com/vi/n7O3JZD_LKg/0.jpg)](http://youtu.be/n7O3JZD_LKg)
 
+Link: http://youtu.be/n7O3JZD_LKg
+
 ## Errors
 If you get an Node.js module install error, edit your Edit Environment Variables in Windows.
 Add your Popcorn-Baker folder to the Environment Variables, example: C:\BUILD
