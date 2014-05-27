@@ -144,7 +144,7 @@ IF NOT EXIST "%npmPath%\init.js" ECHO. 2>"%npmPath%\init.js"
 IF NOT EXIST "%npmPath%\cache" MKDIR "%npmPath%\cache"
 
 :: Init node vars
-"cd "%nodejsWork%" && "%nodejsPath%\nodevars.bat" && "%nodejsPath%\npm" config set globalconfig "%npmGlobalConfigFilePath%" --global"
+cmd.exe /c "cd "%nodejsWork%" && "%nodejsPath%\nodevars.bat" && "%nodejsPath%\npm" config set globalconfig "%npmGlobalConfigFilePath%" --global"
 
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
@@ -204,7 +204,7 @@ IF NOT EXIST "%npmPath%\init.js" ECHO. 2>"%npmPath%\init.js"
 IF NOT EXIST "%npmPath%\cache" MKDIR "%npmPath%\cache"
 
 :: Init node vars
-"cd "%nodejsWork%" && "%nodejsPath%\nodevars.bat" && "%nodejsPath%\npm" config set globalconfig "%npmGlobalConfigFilePath%" --global"
+cmd.exe /c "cd "%nodejsWork%" && "%nodejsPath%\nodevars.bat" && "%nodejsPath%\npm" config set globalconfig "%npmGlobalConfigFilePath%" --global"
 
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
