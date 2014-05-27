@@ -146,6 +146,9 @@ IF NOT EXIST "%npmPath%\cache" MKDIR "%npmPath%\cache"
 :: Init node vars
 cmd.exe /c "cd "%nodejsWork%" && "%nodejsPath%\nodevars.bat" && "%nodejsPath%\npm" config set globalconfig "%npmGlobalConfigFilePath%" --global"
 
+:: SET-PATH (test)
+set PATH=%PATH%;%nodejsPath%
+
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod1%
@@ -205,6 +208,9 @@ IF NOT EXIST "%npmPath%\cache" MKDIR "%npmPath%\cache"
 
 :: Init node vars
 cmd.exe /c "cd "%nodejsWork%" && "%nodejsPath%\nodevars.bat" && "%nodejsPath%\npm" config set globalconfig "%npmGlobalConfigFilePath%" --global"
+
+:: SET-PATH (test)
+set PATH=%PATH%;%nodejsPath%
 
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
