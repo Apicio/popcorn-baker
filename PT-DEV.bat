@@ -162,8 +162,14 @@ IF NOT EXIST "%npmPath%\cache" MKDIR "%npmPath%\cache"
 :: Init node vars
 cmd.exe /c "cd "%nodejsWork%" && "%nodejsPath%\nodevars.bat" && "%nodejsPath%\npm" config set globalconfig "%npmGlobalConfigFilePath%" --global"
 
-:: SET-PATH (test)
+:: SET TEMPORARY NODE.JS PATH
 set PATH=%PATH%;%nodejsPath%
+
+:: WHERE IS GIT? SET TEMPORARY PATH
+SET WHEREISGIT=
+IF /i NOT "%PROCESSOR_ARCHITECTURE%"=="x86" SET WHEREISGIT=\Wow6432Node
+FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISGIT%\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1 /v InstallLocation') DO SET GIT=%%G
+SET PATH=%PATH%;%GIT%cmd;
 
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
