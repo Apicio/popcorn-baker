@@ -15,9 +15,5 @@ And edit these lines:
 2. PT_BETA = Current repo.
 3. SET PUB = Folder or cloudfolder to move installer to.
 
-## Errors
-More info: https://github.com/r0gger/Popcorn-Baker/wiki/Errors-and-solutions
-
-
-
+**Go here for [Errors and Solutions](https://github.com/r0gger/Popcorn-Baker/wiki/Errors-and-solutions)**
 
