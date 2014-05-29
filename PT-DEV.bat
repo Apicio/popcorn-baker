@@ -17,8 +17,11 @@ SET PT_BETA=dev-0.3
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
 SET PUB=C:\POPCORN-TIME-BUILDS
 
-:: PATHS NSIS - http://nsis.sourceforge.net/Main_Page
-SET makeNsis=C:\PROGRA~2\NSIS
+:: PATHS NSIS
+SET WHEREISNSIS=
+IF /i NOT "%PROCESSOR_ARCHITECTURE%"=="x86" SET WHEREISNSIS=\Wow6432Node
+FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISNSIS%\Microsoft\Windows\CurrentVersion\Uninstall\NSIS /v InstallLocation') DO SET makeNsis=%%G
+SET makeNsis=%makeNsis%
 
 :: POPCORN APP DOWNLOAD (no edits necessary)
 SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/%PT_BETA%.zip
