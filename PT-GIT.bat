@@ -3,9 +3,6 @@ SETLOCAL EnableDelayedExpansion
 
 TITLE POPCORN-TIME BAKER
 
-:: POPCORN-TIME BAKER
-:: VERSION: 0.1
-
 :: NODEJS VERSION
 SET nodejsVersion=0.10.28
 SET nodejsArch=x86
