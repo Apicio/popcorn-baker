@@ -16,8 +16,11 @@ SET PT_VERSION=0.3.1
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
 SET PUB=C:\POPCORN-TIME-BUILDS
 
-:: PATHS NSIS - http://nsis.sourceforge.net/Main_Page
-SET makeNsis=C:\PROGRA~2\NSIS
+:: PATH NSIS
+SET WHEREISNSIS=
+IF /i NOT "%PROCESSOR_ARCHITECTURE%"=="x86" SET WHEREISNSIS=\Wow6432Node
+FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISNSIS%\Microsoft\Windows\CurrentVersion\Uninstall\NSIS /v InstallLocation') DO SET makeNsis=%%G
+SET makeNsis=%makeNsis%
 
 :: NODEJS VARS (no edits necessary)
 SET nodejsTask=0
