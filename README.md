@@ -1,4 +1,4 @@
-Popcorn-Baker
+Popcorn Baker
 =============
 An easy all-in-one batch script to bake Popcorn-Time for Windows
 * Official Repo: https://github.com/popcorn-official/popcorn-app
