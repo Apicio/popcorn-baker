@@ -8,8 +8,7 @@ SET nodejsVersion=0.10.28
 SET nodejsArch=x86
 
 :: POPCORN VERSION
-SET PT_VERSION=0.3.1
-SET PT_BETA=master
+SET PT_REPO=master
 
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
 SET PUB=C:\POPCORN-TIME-BUILDS
@@ -21,7 +20,7 @@ FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISNSIS%\Microsoft\Windo
 SET makeNsis=%makeNsis%
 
 :: POPCORN APP DOWNLOAD (no edits necessary)
-SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/%PT_BETA%.zip
+SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/%PT_REPO%.zip
 SET popcornZip=popcorn-app.zip
 
 :: NODEJS VARS (no edits necessary)
@@ -46,7 +45,7 @@ SET installMod2="%nodejsWork%\installMod2.bat"
 SET installMod3="%nodejsWork%\installMod3.bat"
 
 :: OTHER POPCORN VARS (no edits necessary)
-SET INSTALLERWIN="%nodejsWork%\popcorn-app-%PT_BETA%\dist\windows"
+SET INSTALLERWIN="%nodejsWork%\popcorn-app-%PT_REPO%\dist\windows"
 
 CLS
 GOTO INSTALL
@@ -130,7 +129,7 @@ ECHO end with >>%popcornVbs%
 cscript.exe /NoLogo %popcornVbs%
 
 :: IF EXIST, CLEAN UP FIRST
-IF EXIST "%nodejsWork%\popcorn-app-%PT_BETA%" RMDIR /S /Q "%nodejsWork%\popcorn-app-%PT_BETA%"
+IF EXIST "%nodejsWork%\popcorn-app-%PT_REPO%" RMDIR /S /Q "%nodejsWork%\popcorn-app-%PT_REPO%"
 
 :: PREPARE CSCRIPT EXTRACT
 ECHO ZipFile="%TEMP%\%popcornZip%" >%UnzipVbs%
@@ -174,17 +173,17 @@ SET PATH=%PATH%;%GIT%cmd;
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod1%
-ECHO cd "%nodejsWork%\popcorn-app-%PT_BETA%\" >>%installMod1%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO%\" >>%installMod1%
 ECHO npm install -g grunt-cli bower >>%installMod1%
 
 ECHO @ECHO OFF >%installMod2%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod2%
-ECHO cd "%nodejsWork%\popcorn-app-%PT_BETA%" >>%installMod2%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO%" >>%installMod2%
 ECHO npm install >>%installMod2%
 
 ECHO @ECHO OFF >%installMod3%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod3%
-ECHO cd "%nodejsWork%\popcorn-app-%PT_BETA%\" >>%installMod3%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO%\" >>%installMod3%
 ECHO grunt build >>%installMod3%
 
 :: INSTALL NODE MODULES
@@ -193,16 +192,18 @@ CALL %installMod2%
 CALL %installMod3%
 
 :: BUILD
+ECHO Creating installer...
 IF EXIST "%INSTALLERWIN%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERWIN%\installer.nsi"
+ECHO Creating updater...
 IF EXIST "%INSTALLERWIN%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERWIN%\updater.nsi"
 
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
 :: INSTALLER
-IF EXIST "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-32.exe" MOVE /Y "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-32.exe" "%PUB%\"
+IF EXIST "%INSTALLERWIN%\Popcorn-Time-*.exe" MOVE /Y "%INSTALLERWIN%\Popcorn-Time-*.exe" "%PUB%\"
 :: UPDATER
-IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" MOVE /Y "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" "%PUB%\"
+IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-*.exe" MOVE /Y "%INSTALLERWIN%\Updater-Popcorn-Time-*.exe" "%PUB%\"
 
 :: CLEANUP
 IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"

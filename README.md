@@ -11,9 +11,8 @@ An easy all-in-one batch script to bake Popcorn-Time for Windows
 ## Getting Started
 And edit these lines:
 
-1. PT_VERSION = Current version.
-2. PT_BETA = Current repo.
-3. SET PUB = Folder or cloudfolder to move installer to.
+1. SET PT_REPO = Current repo such as "master" or "dev-0.3"
+2. SET PUB = Folder or cloudfolder to move installer to.
 
 **Go here for [Errors and Solutions](https://github.com/r0gger/Popcorn-Baker/wiki)**
 

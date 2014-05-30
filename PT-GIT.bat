@@ -8,7 +8,8 @@ SET nodejsVersion=0.10.28
 SET nodejsArch=x86
 
 :: POPCORN VERSION
-SET PT_VERSION=0.3.1
+SET PT_REPO1=master
+SET PT_REPO2=dev-0.3
 
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
 SET PUB=C:\POPCORN-TIME-BUILDS
@@ -40,8 +41,8 @@ SET installMod2="%nodejsWork%\installMod2.bat"
 SET installMod3="%nodejsWork%\installMod3.bat"
 
 :: OTHER POPCORN VARS (no edits necessary)
-SET INSTMAST="%nodejsWork%\popcorn-app-master\dist\windows"
-SET INSTDEV="%nodejsWork%\popcorn-app-dev-0.3\dist\windows"
+SET INSTMAST="%nodejsWork%\popcorn-app-%PT_REPO1%\dist\windows"
+SET INSTDEV="%nodejsWork%\popcorn-app-%PT_REPO2%\dist\windows"
 
 :: Check if the menu selection is provided as a command line parameter
 IF NOT "%nodejsTask%"=="" GOTO ACTION
@@ -56,8 +57,8 @@ CLS
 ECHO.
 ECHO # POPCORN BAKER
 ECHO.
-ECHO  1 - Build Popcorn-Time Master
-ECHO  2 - Build Popcorn-Time Dev-0.3
+ECHO  1 - Build Popcorn-Time %PT_REPO1%
+ECHO  2 - Build Popcorn-Time %PT_REPO2% 
 ECHO  9 - Exit
 ECHO.
 SET /P nodejsTask=Choose a task:
@@ -136,7 +137,7 @@ FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISGIT%\Microsoft\Window
 SET PATH=%PATH%;%GIT%cmd;
 
 :: DOWNLOAD LATEST VERSION
-git clone https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-master"
+git clone https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-%PT_REPO1%"
 
 :: RELOCATE AND EDIT NPM
 ECHO prefix = %nodejsPath%\ >%npmGlobalConfigFilePath%
@@ -158,17 +159,17 @@ set PATH=%PATH%;%nodejsPath%
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod1%
-ECHO cd "%nodejsWork%\popcorn-app-master\" >>%installMod1%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO1%\" >>%installMod1%
 ECHO npm install -g grunt-cli bower >>%installMod1%
 
 ECHO @ECHO OFF >%installMod2%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod2%
-ECHO cd "%nodejsWork%\popcorn-app-master" >>%installMod2%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO1%" >>%installMod2%
 ECHO npm install >>%installMod2%
 
 ECHO @ECHO OFF >%installMod3%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod3%
-ECHO cd "%nodejsWork%\popcorn-app-master\" >>%installMod3%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO1%\" >>%installMod3%
 ECHO grunt build >>%installMod3%
 
 :: INSTALL NODE MODULES
@@ -184,9 +185,9 @@ IF EXIST "%INSTMAST%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTMAST%\upda
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
 :: INSTALLER
-IF EXIST "%INSTMAST%\Popcorn-Time-%PT_VERSION%-Win-32.exe" MOVE /Y "%INSTMAST%\Popcorn-Time-%PT_VERSION%-Win-32.exe" "%PUB%\"
+IF EXIST "%INSTMAST%\Popcorn-Time-*.exe" MOVE /Y "%INSTMAST%\Popcorn-Time-*.exe" "%PUB%\"
 :: UPDATER
-IF EXIST "%INSTMAST%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" MOVE /Y "%INSTMAST%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" "%PUB%\"
+IF EXIST "%INSTMAST%\Updater-Popcorn-Time-*.exe" MOVE /Y "%INSTMAST%\Updater-Popcorn-Time-*.exe" "%PUB%\"
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
@@ -205,7 +206,7 @@ FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISGIT%\Microsoft\Window
 SET PATH=%PATH%;%GIT%cmd;
 
 :: DOWNLOAD LATEST VERSION
-git clone https://github.com/popcorn-official/popcorn-app.git -b dev-0.3 "%nodejsWork%\popcorn-app-dev-0.3"
+git clone https://github.com/popcorn-official/popcorn-app.git -b %PT_REPO2% "%nodejsWork%\popcorn-app-%PT_REPO2%"
 
 :: RELOCATE AND EDIT NPM
 ECHO prefix = %nodejsPath%\ >%npmGlobalConfigFilePath%
@@ -227,17 +228,17 @@ set PATH=%PATH%;%nodejsPath%
 :: PREPARE INSTALL SCRIPT NODE MODULES
 ECHO @ECHO OFF >%installMod1%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod1%
-ECHO cd "%nodejsWork%\popcorn-app-dev-0.3\" >>%installMod1%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO2%\" >>%installMod1%
 ECHO npm install -g grunt-cli bower >>%installMod1%
 
 ECHO @ECHO OFF >%installMod2%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod2%
-ECHO cd "%nodejsWork%\popcorn-app-dev-0.3" >>%installMod2%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO2%" >>%installMod2%
 ECHO npm install >>%installMod2%
 
 ECHO @ECHO OFF >%installMod3%
 ECHO SETLOCAL EnableDelayedExpansion >>%installMod3%
-ECHO cd "%nodejsWork%\popcorn-app-dev-0.3\" >>%installMod3%
+ECHO cd "%nodejsWork%\popcorn-app-%PT_REPO2%\" >>%installMod3%
 ECHO grunt build >>%installMod3%
 
 :: INSTALL NODE MODULES
@@ -253,12 +254,12 @@ IF EXIST "%INSTDEV%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTDEV%\update
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
 :: DEV-INSTALLER
-IF EXIST "%INSTDEV%\Popcorn-Time-%PT_VERSION%-Win-32.exe" RENAME "%INSTDEV%\Popcorn-Time-%PT_VERSION%-Win-32.exe" "Popcorn-Time-dev-0.3.exe"
-IF EXIST "%INSTDEV%\Popcorn-Time-dev-0.3.exe" MOVE /Y "%INSTDEV%\Popcorn-Time-dev-0.3.exe" "%PUB%\"
+IF EXIST "%INSTDEV%\Popcorn-Time-*.exe" RENAME "%INSTDEV%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO2%.exe"
+IF EXIST "%INSTDEV%\Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%INSTDEV%\Popcorn-Time-%PT_REPO2%.exe" "%PUB%\"
 
 :: DEV-UPDATER
-IF EXIST "%INSTDEV%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" RENAME "%INSTDEV%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" "Updater-Popcorn-Time-dev-0.3.exe" 
-IF EXIST "%INSTDEV%\Updater-Popcorn-Time-dev-0.3.exe" MOVE /Y "%INSTDEV%\Updater-Popcorn-Time-dev-0.3.exe" "%PUB%\"
+IF EXIST "%INSTDEV%\Updater-Popcorn-Time-*.exe" RENAME "%INSTDEV%\Updater-Popcorn-Time-*.exe" "Updater-Popcorn-Time-%PT_REPO2%.exe" 
+IF EXIST "%INSTDEV%\Updater-Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%INSTDEV%\Updater-Popcorn-Time-%PT_REPO2%.exe" "%PUB%\"
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
