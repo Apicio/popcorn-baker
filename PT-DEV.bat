@@ -201,11 +201,11 @@ IF EXIST "%INSTALLERWIN%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERW
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
 :: DEV-INSTALLER
-IF EXIST "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-32.exe" RENAME "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-32.exe" "Popcorn-Time-%PT_BETA%.exe"
+IF EXIST "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-*.exe" RENAME "%INSTALLERWIN%\Popcorn-Time-%PT_VERSION%-Win-*.exe" "Popcorn-Time-%PT_BETA%.exe"
 IF EXIST "%INSTALLERWIN%\Popcorn-Time-%PT_BETA%.exe" MOVE /Y "%INSTALLERWIN%\Popcorn-Time-%PT_BETA%.exe" "%PUB%\"
 
 :: DEV-UPDATER
-IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" RENAME "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-32.exe" "Updater-Popcorn-Time-%PT_BETA%.exe" 
+IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-*.exe" RENAME "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_VERSION%-Win-*.exe" "Updater-Popcorn-Time-%PT_BETA%.exe" 
 IF EXIST "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_BETA%.exe" MOVE /Y "%INSTALLERWIN%\Updater-Popcorn-Time-%PT_BETA%.exe" "%PUB%\"
 
 :: CLEANUP
