@@ -9,7 +9,7 @@ An easy all-in-one batch script to bake Popcorn-Time for Windows
 - Download and install Git: http://git-scm.com/downloads
 
 ## Getting Started
-And edit these lines:
+Edit these lines with [Notepadd++](http://notepad-plus-plus.org/)
 
 1. SET PT_REPO = Current repo such as "master" or "dev-0.3"
 2. SET PUB = Folder or cloudfolder to move installer to.
