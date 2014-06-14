@@ -43,8 +43,9 @@ SET installMod3="%nodejsWork%\installMod3.bat"
 :: OTHER POPCORN VARS (no edits necessary)
 SET INST1="%nodejsWork%\popcorn-app-%PT_REPO1%\dist\windows"
 SET INST2="%nodejsWork%\popcorn-app-%PT_REPO2%\dist\windows"
-SET MOVEFROM1=%nodejsPath%\work\popcorn-app-%PT_REPO1%\build\releases\Popcorn-Time\win
-SET MOVEFROM2=%nodejsPath%\work\popcorn-app-%PT_REPO2%\build\releases\Popcorn-Time\win
+SET MOVEFROM1=%nodejsWork%\popcorn-app-%PT_REPO1%\build\releases\Popcorn-Time\win
+SET MOVEFROM2=%nodejsWork%\popcorn-app-%PT_REPO2%\build\releases\Popcorn-Time\win
+SET VERBOSE=3
 
 :: Check if the menu selection is provided as a command line parameter
 IF NOT "%nodejsTask%"=="" GOTO ACTION
@@ -182,8 +183,8 @@ CALL %installMod3%
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
-IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INST1%\installer.nsi"
-IF EXIST "%INST1%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INST1%\updater.nsi"
+IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\installer.nsi"
+IF EXIST "%INST1%\updater.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\updater.nsi"
 
 :: INSTALLER
 IF EXIST "%MOVEFROM1%\Popcorn-Time-*.exe" RENAME "%MOVEFROM1%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO1%.exe"
@@ -253,8 +254,8 @@ CALL %installMod3%
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%" MKDIR "%PUB%"
 
-IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" "%INST2%\installer.nsi"
-IF EXIST "%INST2%\updater.nsi" "%makeNsis%\makensis.exe" "%INST2%\updater.nsi"
+IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\installer.nsi"
+IF EXIST "%INST2%\updater.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\updater.nsi"
 
 :: INSTALLER
 IF EXIST "%MOVEFROM2%\Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO2%.exe"
