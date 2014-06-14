@@ -192,9 +192,9 @@ CALL %installMod2%
 CALL %installMod3%
 
 ECHO Creating Popcorn Time %PT_REPO% - installer...
-IF EXIST "%INSTALLERWIN%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERWIN%\installer.nsi"
+IF EXIST "%INSTALLERWIN%\installer.nsi" "%makeNsis%\makensis.exe" "%INSTALLERWIN%\installer.nsi"
 ECHO Creating Popcorn Time %PT_REPO% - updater...
-IF EXIST "%INSTALLERWIN%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTALLERWIN%\updater.nsi"
+IF EXIST "%INSTALLERWIN%\updater.nsi" "%makeNsis%\makensis.exe" "%INSTALLERWIN%\updater.nsi"
 
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
