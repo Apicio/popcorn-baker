@@ -41,8 +41,10 @@ SET installMod2="%nodejsWork%\installMod2.bat"
 SET installMod3="%nodejsWork%\installMod3.bat"
 
 :: OTHER POPCORN VARS (no edits necessary)
-SET INSTMAST="%nodejsWork%\popcorn-app-%PT_REPO1%\dist\windows"
-SET INSTDEV="%nodejsWork%\popcorn-app-%PT_REPO2%\dist\windows"
+SET INST1="%nodejsWork%\popcorn-app-%PT_REPO1%\dist\windows"
+SET INST2="%nodejsWork%\popcorn-app-%PT_REPO2%\dist\windows"
+SET MOVEFROM1=%nodejsPath%\work\popcorn-app-%PT_REPO1%\build\releases\Popcorn-Time\win
+SET MOVEFROM2=%nodejsPath%\work\popcorn-app-%PT_REPO2%\build\releases\Popcorn-Time\win
 
 :: Check if the menu selection is provided as a command line parameter
 IF NOT "%nodejsTask%"=="" GOTO ACTION
@@ -67,8 +69,8 @@ ECHO.
 ::::::::::::::::::::::::::::::::::::::::
 :ACTION
 ::::::::::::::::::::::::::::::::::::::::
-IF %nodejsTask% == 1 GOTO POPCORN-MASTER
-IF %nodejsTask% == 2 GOTO POPCORN-DEV
+IF %nodejsTask% == 1 GOTO POPCORN1
+IF %nodejsTask% == 2 GOTO POPCORN2
 IF %nodejsTask% == 9 GOTO EXIT
 IF %nodejsTask% == 0 GOTO INSTALL-NODE
 GOTO MENU
@@ -122,7 +124,7 @@ IF NOT EXIST "%nodejsPath%\node.exe" ECHO An error occurred during the installat
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
-:POPCORN-MASTER
+:POPCORN1
 ::::::::::::::::::::::::::::::::::::::::
 IF NOT EXIST "%nodejsPath%\node.exe" ECHO Node.js is not installed... Please install first... && GOTO MENU
 
@@ -177,21 +179,23 @@ CALL %installMod1%
 CALL %installMod2%
 CALL %installMod3%
 
-:: BUILD
-IF EXIST "%INSTMAST%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTMAST%\installer.nsi"
-IF EXIST "%INSTMAST%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTMAST%\updater.nsi"
-
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
+IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INST1%\installer.nsi"
+IF EXIST "%INST1%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INST1%\updater.nsi"
+
 :: INSTALLER
-IF EXIST "%INSTMAST%\Popcorn-Time-*.exe" MOVE /Y "%INSTMAST%\Popcorn-Time-*.exe" "%PUB%\"
+IF EXIST "%MOVEFROM1%\Popcorn-Time-*.exe" RENAME "%MOVEFROM1%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO1%.exe"
+IF EXIST "%MOVEFROM1%\Popcorn-Time-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\Popcorn-Time-%PT_REPO1%.exe" "%PUB%"
+
 :: UPDATER
-IF EXIST "%INSTMAST%\Updater-Popcorn-Time-*.exe" MOVE /Y "%INSTMAST%\Updater-Popcorn-Time-*.exe" "%PUB%\"
+IF EXIST "%MOVEFROM1%\Updater-Popcorn-Time-*.exe" RENAME "%MOVEFROM1%\Updater-Popcorn-Time-*.exe" "Updater-Popcorn-Time-%PT_REPO1%.exe" 
+IF EXIST "%MOVEFROM1%\Updater-Popcorn-Time-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\Updater-Popcorn-Time-%PT_REPO1%.exe" "%PUB%"
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
-:POPCORN-DEV
+:POPCORN2
 ::::::::::::::::::::::::::::::::::::::::
 IF NOT EXIST "%nodejsPath%\node.exe" ECHO Node.js is not installed... Please install first... && GOTO MENU
 
@@ -246,20 +250,19 @@ CALL %installMod1%
 CALL %installMod2%
 CALL %installMod3%
 
-:: BUILD
-IF EXIST "%INSTDEV%\installer.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTDEV%\installer.nsi"
-IF EXIST "%INSTDEV%\updater.nsi" "%makeNsis%\makensis.exe" /V0 "%INSTDEV%\updater.nsi"
-
 :: CREATE DIR TO MOVE POPCORN
-IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
+IF NOT EXIST "%PUB%" MKDIR "%PUB%"
 
-:: DEV-INSTALLER
-IF EXIST "%INSTDEV%\Popcorn-Time-*.exe" RENAME "%INSTDEV%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO2%.exe"
-IF EXIST "%INSTDEV%\Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%INSTDEV%\Popcorn-Time-%PT_REPO2%.exe" "%PUB%\"
+IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" "%INST2%\installer.nsi"
+IF EXIST "%INST2%\updater.nsi" "%makeNsis%\makensis.exe" "%INST2%\updater.nsi"
 
-:: DEV-UPDATER
-IF EXIST "%INSTDEV%\Updater-Popcorn-Time-*.exe" RENAME "%INSTDEV%\Updater-Popcorn-Time-*.exe" "Updater-Popcorn-Time-%PT_REPO2%.exe" 
-IF EXIST "%INSTDEV%\Updater-Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%INSTDEV%\Updater-Popcorn-Time-%PT_REPO2%.exe" "%PUB%\"
+:: INSTALLER
+IF EXIST "%MOVEFROM2%\Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO2%.exe"
+IF EXIST "%MOVEFROM2%\Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\Popcorn-Time-%PT_REPO2%.exe" "%PUB%"
+
+:: UPDATER
+IF EXIST "%MOVEFROM2%\Updater-Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Updater-Popcorn-Time-*.exe" "Updater-Popcorn-Time-%PT_REPO2%.exe" 
+IF EXIST "%MOVEFROM2%\Updater-Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\Updater-Popcorn-Time-%PT_REPO2%.exe" "%PUB%"
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
