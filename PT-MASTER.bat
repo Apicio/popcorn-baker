@@ -46,8 +46,8 @@ SET installMod3="%nodejsWork%\installMod3.bat"
 
 :: OTHER POPCORN VARS (no edits necessary)
 SET INSTALLERWIN=%nodejsWork%\popcorn-app-%PT_REPO%\dist\windows
-SET MOVEFROM=%nodejsWork%\popcorn-app-%PT_REPO%\build\releases\Popcorn-Time\win
-SET VERBOSE=3
+SET MOVEFROM=%nodejsWork%\popcorn-app-%PT_REPO%\dist\windows
+SET VERBOSE=0
 
 CLS
 GOTO INSTALL
@@ -193,17 +193,14 @@ CALL %installMod1%
 CALL %installMod2%
 CALL %installMod3%
 
-ECHO Creating Popcorn Time %PT_REPO% - installer...
+ECHO Creating Popcorn Time %PT_REPO% - Installer...
 IF EXIST "%INSTALLERWIN%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INSTALLERWIN%\installer.nsi"
-ECHO Creating Popcorn Time %PT_REPO% - updater...
-IF EXIST "%INSTALLERWIN%\updater.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INSTALLERWIN%\updater.nsi"
 
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
-:: MOVE INSTALLER/UPDATER
-IF EXIST "%MOVEFROM%\Popcorn-Time-*.exe" MOVE /Y "%MOVEFROM%\Popcorn-Time-*.exe" "%PUB%"
-IF EXIST "%MOVEFROM%\Updater-Popcorn-Time-*.exe" MOVE /Y "%MOVEFROM%\Updater-Popcorn-Time-*.exe" "%PUB%"
+:: MOVE INSTALLER
+IF EXIST "%MOVEFROM%\PopcornTime*.exe" MOVE /Y "%MOVEFROM%\PopcornTime*.exe" "%PUB%"
 
 :: CLEANUP
 IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"
