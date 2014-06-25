@@ -143,8 +143,7 @@ SET PATH=%PATH%;%GIT%cmd;
 
 :: DOWNLOAD LATEST VERSION
 IF NOT EXIST "%nodejsWork%\popcorn-app-%PT_REPO1%" git clone https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-%PT_REPO1%"
-
-IF EXIST "%nodejsWork%\popcorn-app-%PT_REPO1%" git pull  https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-%PT_REPO1%"
+IF EXIST "%nodejsWork%\popcorn-app-%PT_REPO1%" git pull https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-%PT_REPO1%"
 
 :: RELOCATE AND EDIT NPM
 ECHO prefix = %nodejsPath%\ >%npmGlobalConfigFilePath%
@@ -192,7 +191,6 @@ ECHO Creating Popcorn Time %PT_REPO1% - Installer...
 IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\installer.nsi"
 IF EXIST "%MOVEFROM1%\PopcornTime*.exe" RENAME "%MOVEFROM1%\PopcornTime*.exe" "PopcornTime-%PT_REPO1%.exe"
 IF EXIST "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" "%PUB%"
-
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
@@ -212,8 +210,7 @@ SET PATH=%PATH%;%GIT%cmd;
 
 :: DOWNLOAD LATEST VERSION
 IF NOT EXIST "%nodejsWork%\popcorn-app-%PT_REPO2%" git clone https://github.com/popcorn-official/popcorn-app.git -b %PT_REPO2% "%nodejsWork%\popcorn-app-%PT_REPO2%"
-
-IF EXIST "%nodejsWork%\popcorn-app-%PT_REPO2%" git pull  https://github.com/popcorn-official/popcorn-app.git -b %PT_REPO2% "%nodejsWork%\popcorn-app-%PT_REPO2%"
+IF EXIST "%nodejsWork%\popcorn-app-%PT_REPO2%" git pull https://github.com/popcorn-official/popcorn-app.git -b %PT_REPO2% "%nodejsWork%\popcorn-app-%PT_REPO2%"
 
 :: RELOCATE AND EDIT NPM
 ECHO prefix = %nodejsPath%\ >%npmGlobalConfigFilePath%
@@ -261,14 +258,12 @@ ECHO Creating Popcorn Time %PT_REPO2% - Installer...
 IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\installer.nsi"
 IF EXIST "%MOVEFROM2%\Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Popcorn-Time-*.exe" "PopcornTime-%PT_REPO2%.exe"
 IF EXIST "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" "%PUB%"
-
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
 :CLEANUP
 ::::::::::::::::::::::::::::::::::::::::
 IF EXIST "%nodejsWork%" RMDIR /s /q "%nodejsWork%"
-
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
