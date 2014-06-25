@@ -41,11 +41,11 @@ SET installMod2="%nodejsWork%\installMod2.bat"
 SET installMod3="%nodejsWork%\installMod3.bat"
 
 :: OTHER POPCORN VARS (no edits necessary)
-SET INST1="%nodejsWork%\popcorn-app-%PT_REPO1%\dist\windows"
-SET INST2="%nodejsWork%\popcorn-app-%PT_REPO2%\dist\windows"
-SET MOVEFROM1=%nodejsWork%\popcorn-app-%PT_REPO1%\build\releases\Popcorn-Time\win
+SET INST1=%nodejsWork%\popcorn-app-%PT_REPO1%\dist\windows
+SET INST2=%nodejsWork%\popcorn-app-%PT_REPO2%\dist\windows
+SET MOVEFROM1=%nodejsWork%\popcorn-app-%PT_REPO1%\dist\windows
 SET MOVEFROM2=%nodejsWork%\popcorn-app-%PT_REPO2%\build\releases\Popcorn-Time\win
-SET VERBOSE=3
+SET VERBOSE=0
 
 :: Check if the menu selection is provided as a command line parameter
 IF NOT "%nodejsTask%"=="" GOTO ACTION
@@ -54,14 +54,15 @@ IF NOT "%nodejsTask%"=="" GOTO ACTION
 :MENU
 ::::::::::::::::::::::::::::::::::::::::
 IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"
-IF EXIST "%nodejsWork%" RMDIR /s /q "%nodejsWork%"
 
 CLS
 ECHO.
-ECHO # POPCORN BAKER
+ECHO  # POPCORN BAKER
 ECHO.
 ECHO  1 - Build Popcorn-Time %PT_REPO1%
 ECHO  2 - Build Popcorn-Time %PT_REPO2% 
+ECHO  3 - Clean Up
+ECHO.
 ECHO  9 - Exit
 ECHO.
 SET /P nodejsTask=Choose a task:
@@ -72,6 +73,7 @@ ECHO.
 ::::::::::::::::::::::::::::::::::::::::
 IF %nodejsTask% == 1 GOTO POPCORN1
 IF %nodejsTask% == 2 GOTO POPCORN2
+IF %nodejsTask% == 3 GOTO CLEANUP
 IF %nodejsTask% == 9 GOTO EXIT
 IF %nodejsTask% == 0 GOTO INSTALL-NODE
 GOTO MENU
@@ -140,7 +142,9 @@ FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISGIT%\Microsoft\Window
 SET PATH=%PATH%;%GIT%cmd;
 
 :: DOWNLOAD LATEST VERSION
-git clone https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-%PT_REPO1%"
+IF NOT EXIST "%nodejsWork%\popcorn-app-%PT_REPO1%" git clone https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-%PT_REPO1%"
+
+IF EXIST "%nodejsWork%\popcorn-app-%PT_REPO1%" git pull  https://github.com/popcorn-official/popcorn-app.git "%nodejsWork%\popcorn-app-%PT_REPO1%"
 
 :: RELOCATE AND EDIT NPM
 ECHO prefix = %nodejsPath%\ >%npmGlobalConfigFilePath%
@@ -183,16 +187,12 @@ CALL %installMod3%
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
-IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\installer.nsi"
-IF EXIST "%INST1%\updater.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\updater.nsi"
-
 :: INSTALLER
-IF EXIST "%MOVEFROM1%\Popcorn-Time-*.exe" RENAME "%MOVEFROM1%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO1%.exe"
-IF EXIST "%MOVEFROM1%\Popcorn-Time-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\Popcorn-Time-%PT_REPO1%.exe" "%PUB%"
+ECHO Creating Popcorn Time %PT_REPO1% - Installer...
+IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\installer.nsi"
+IF EXIST "%MOVEFROM1%\PopcornTime*.exe" RENAME "%MOVEFROM1%\PopcornTime*.exe" "PopcornTime-%PT_REPO1%.exe"
+IF EXIST "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" "%PUB%"
 
-:: UPDATER
-IF EXIST "%MOVEFROM1%\Updater-Popcorn-Time-*.exe" RENAME "%MOVEFROM1%\Updater-Popcorn-Time-*.exe" "Updater-Popcorn-Time-%PT_REPO1%.exe" 
-IF EXIST "%MOVEFROM1%\Updater-Popcorn-Time-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\Updater-Popcorn-Time-%PT_REPO1%.exe" "%PUB%"
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
@@ -211,7 +211,9 @@ FOR /F "tokens=2*" %%F in ('REG QUERY HKLM\SOFTWARE%WHEREISGIT%\Microsoft\Window
 SET PATH=%PATH%;%GIT%cmd;
 
 :: DOWNLOAD LATEST VERSION
-git clone https://github.com/popcorn-official/popcorn-app.git -b %PT_REPO2% "%nodejsWork%\popcorn-app-%PT_REPO2%"
+IF NOT EXIST "%nodejsWork%\popcorn-app-%PT_REPO2%" git clone https://github.com/popcorn-official/popcorn-app.git -b %PT_REPO2% "%nodejsWork%\popcorn-app-%PT_REPO2%"
+
+IF EXIST "%nodejsWork%\popcorn-app-%PT_REPO2%" git pull  https://github.com/popcorn-official/popcorn-app.git -b %PT_REPO2% "%nodejsWork%\popcorn-app-%PT_REPO2%"
 
 :: RELOCATE AND EDIT NPM
 ECHO prefix = %nodejsPath%\ >%npmGlobalConfigFilePath%
@@ -254,16 +256,19 @@ CALL %installMod3%
 :: CREATE DIR TO MOVE POPCORN
 IF NOT EXIST "%PUB%" MKDIR "%PUB%"
 
-IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\installer.nsi"
-IF EXIST "%INST2%\updater.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\updater.nsi"
-
 :: INSTALLER
-IF EXIST "%MOVEFROM2%\Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Popcorn-Time-*.exe" "Popcorn-Time-%PT_REPO2%.exe"
-IF EXIST "%MOVEFROM2%\Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\Popcorn-Time-%PT_REPO2%.exe" "%PUB%"
+ECHO Creating Popcorn Time %PT_REPO2% - Installer...
+IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\installer.nsi"
+IF EXIST "%MOVEFROM2%\Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Popcorn-Time-*.exe" "PopcornTime-%PT_REPO2%.exe"
+IF EXIST "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" "%PUB%"
 
-:: UPDATER
-IF EXIST "%MOVEFROM2%\Updater-Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Updater-Popcorn-Time-*.exe" "Updater-Popcorn-Time-%PT_REPO2%.exe" 
-IF EXIST "%MOVEFROM2%\Updater-Popcorn-Time-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\Updater-Popcorn-Time-%PT_REPO2%.exe" "%PUB%"
+GOTO MENU
+
+::::::::::::::::::::::::::::::::::::::::
+:CLEANUP
+::::::::::::::::::::::::::::::::::::::::
+IF EXIST "%nodejsWork%" RMDIR /s /q "%nodejsWork%"
+
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
