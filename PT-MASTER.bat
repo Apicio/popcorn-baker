@@ -13,6 +13,9 @@ SET PT_REPO=master
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
 SET PUB=C:\POPCORN-TIME-BUILDS
 
+:: ACTION AFTER BUILD (run setup = r, open explorer = o, exit = e) 
+SET setupTask=o
+
 :: PATH NSIS (no edits necessary)
 SET WHEREISNSIS=
 IF /i NOT "%PROCESSOR_ARCHITECTURE%"=="x86" SET WHEREISNSIS=\Wow6432Node
@@ -205,6 +208,19 @@ IF EXIST "%MOVEFROM%\PopcornTime*.exe" MOVE /Y "%MOVEFROM%\PopcornTime*.exe" "%P
 :: CLEANUP
 IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"
 IF EXIST "%nodejsWork%" RMDIR /s /q "%nodejsWork%"
+
+::::::::::::::::::::::::::::::::::::::::
+:SETUPACTION
+::::::::::::::::::::::::::::::::::::::::
+IF %setupTask% == o GOTO OPENEXPLORER
+IF %setupTask% == r GOTO RUNSETUP
+IF %setupTask% == e GOTO EOF
+
+:OPENEXPLORER
+explorer %PUB% 
+
+:RUNSETUP
+START "" "%PUB%\PopcornTimeSetup.exe"
 
 ::::::::::::::::::::::::::::::::::::::::
 :EOF
