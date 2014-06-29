@@ -237,9 +237,7 @@ IF EXIST "%MOVEFROM%\PopcornTime*.exe" MOVE /Y "%MOVEFROM%\PopcornTime*.exe" "%P
 IF EXIST "%TEMP%" RMDIR /s /q "%TEMP%"
 IF EXIST "%nodejsWork%" RMDIR /s /q "%nodejsWork%"
 
-::::::::::::::::::::::::::::::::::::::::
-:SETUPACTION
-::::::::::::::::::::::::::::::::::::::::
+:: ACTION AFTER BUILD
 IF %setupTask% == o GOTO OPENEXPLORER
 IF %setupTask% == r GOTO RUNSETUP
 IF %setupTask% == e GOTO EOF
