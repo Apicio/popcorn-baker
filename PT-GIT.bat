@@ -78,13 +78,13 @@ IF %nodejsTask% == 1 GOTO POPCORN1
 IF %nodejsTask% == 2 GOTO POPCORN2
 IF %nodejsTask% == 9 GOTO EXIT
 IF %nodejsTask% == 0 GOTO INSTALL-NODE
+GOTO MENU
 
 :: ACTION AFTER BUILD 
 IF %setupTask% == o GOTO OPENEXPLORER
 IF %setupTask% == r GOTO RUNSETUP
 IF %setupTask% == e GOTO EOF
 
-GOTO MENU
 ::::::::::::::::::::::::::::::::::::::::
 :INSTALL-NODE
 ::::::::::::::::::::::::::::::::::::::::
