@@ -65,7 +65,6 @@ ECHO  # POPCORN BAKER
 ECHO.
 ECHO  1 - Build Popcorn-Time %PT_REPO1%
 ECHO  2 - Build Popcorn-Time %PT_REPO2% 
-ECHO  3 - Clean Up
 ECHO.
 ECHO  9 - Exit
 ECHO.
@@ -77,11 +76,15 @@ ECHO.
 ::::::::::::::::::::::::::::::::::::::::
 IF %nodejsTask% == 1 GOTO POPCORN1
 IF %nodejsTask% == 2 GOTO POPCORN2
-IF %nodejsTask% == 3 GOTO CLEANUP
 IF %nodejsTask% == 9 GOTO EXIT
 IF %nodejsTask% == 0 GOTO INSTALL-NODE
-GOTO MENU
 
+:: ACTION AFTER BUILD 
+IF %setupTask% == o GOTO OPENEXPLORER
+IF %setupTask% == r GOTO RUNSETUP
+IF %setupTask% == e GOTO EOF
+
+GOTO MENU
 ::::::::::::::::::::::::::::::::::::::::
 :INSTALL-NODE
 ::::::::::::::::::::::::::::::::::::::::
@@ -195,11 +198,6 @@ IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\
 IF EXIST "%MOVEFROM1%\PopcornTime*.exe" RENAME "%MOVEFROM1%\PopcornTime*.exe" "PopcornTime-%PT_REPO1%.exe"
 IF EXIST "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" "%PUB%"
 
-:: ACTION AFTER BUILD 
-IF %setupTask% == o GOTO OPENEXPLORER
-IF %setupTask% == r GOTO RUNSETUP
-IF %setupTask% == e GOTO EOF
-
 :OPENEXPLORER
 explorer %PUB% 
 
@@ -272,11 +270,6 @@ ECHO Creating Popcorn Time %PT_REPO2% - Installer...
 IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\installer.nsi"
 IF EXIST "%MOVEFROM2%\Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Popcorn-Time-*.exe" "PopcornTime-%PT_REPO2%.exe"
 IF EXIST "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" "%PUB%"
-
-:: ACTION AFTER BUILD 
-IF %setupTask% == o GOTO OPENEXPLORER
-IF %setupTask% == r GOTO RUNSETUP
-IF %setupTask% == e GOTO EOF
 
 :OPENEXPLORER
 explorer %PUB% 
