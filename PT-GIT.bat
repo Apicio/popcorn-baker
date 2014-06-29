@@ -202,7 +202,7 @@ IF EXIST "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\PopcornTi
 explorer %PUB% 
 
 :RUNSETUP
-START "" "%PUB%\PopcornTime-%PT_REPO1%.exe" >NUL 2>&1
+START /B "" "%PUB%\PopcornTime-%PT_REPO1%.exe" > NUL
 
 GOTO MENU
 
@@ -275,7 +275,7 @@ IF EXIST "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\PopcornTi
 explorer %PUB% 
 
 :RUNSETUP
-START "" "%PUB%\PopcornTime-%PT_REPO2%.exe" >NUL 2>&1
+START /B "" "%PUB%\PopcornTime-%PT_REPO2%.exe" > NUL
 
 GOTO MENU
 

@@ -246,7 +246,7 @@ IF %setupTask% == e GOTO EOF
 explorer %PUB% 
 
 :RUNSETUP
-START "" "%PUB%\PopcornTimeSetup.exe" >NUL 2>&1
+START /B "" "%PUB%\PopcornTimeSetup.exe" >NUL 2>&1
 
 ::::::::::::::::::::::::::::::::::::::::
 :EOF
