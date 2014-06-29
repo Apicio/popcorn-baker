@@ -14,6 +14,9 @@ SET PT_REPO2=stable
 :: MOVE INSTALLERS TO CLOUD OR FOLDER
 SET PUB=C:\POPCORN-TIME-BUILDS
 
+:: ACTION AFTER BUILD (run setup = r, open explorer = o, exit = e) 
+SET setupTask=o
+
 :: PATH NSIS (no edits necessary)
 SET WHEREISNSIS=
 IF /i NOT "%PROCESSOR_ARCHITECTURE%"=="x86" SET WHEREISNSIS=\Wow6432Node
@@ -191,6 +194,18 @@ ECHO Creating Popcorn Time %PT_REPO1% - Installer...
 IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\installer.nsi"
 IF EXIST "%MOVEFROM1%\PopcornTime*.exe" RENAME "%MOVEFROM1%\PopcornTime*.exe" "PopcornTime-%PT_REPO1%.exe"
 IF EXIST "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" "%PUB%"
+
+:: ACTION AFTER BUILD 
+IF %setupTask% == o GOTO OPENEXPLORER
+IF %setupTask% == r GOTO RUNSETUP
+IF %setupTask% == e GOTO EOF
+
+:OPENEXPLORER
+explorer %PUB% 
+
+:RUNSETUP
+START "" "%PUB%\PopcornTime-%PT_REPO1%.exe"
+
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
@@ -257,6 +272,18 @@ ECHO Creating Popcorn Time %PT_REPO2% - Installer...
 IF EXIST "%INST2%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST2%\installer.nsi"
 IF EXIST "%MOVEFROM2%\Popcorn-Time-*.exe" RENAME "%MOVEFROM2%\Popcorn-Time-*.exe" "PopcornTime-%PT_REPO2%.exe"
 IF EXIST "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" "%PUB%"
+
+:: ACTION AFTER BUILD 
+IF %setupTask% == o GOTO OPENEXPLORER
+IF %setupTask% == r GOTO RUNSETUP
+IF %setupTask% == e GOTO EOF
+
+:OPENEXPLORER
+explorer %PUB% 
+
+:RUNSETUP
+START "" "%PUB%\PopcornTime-%PT_REPO2%.exe"
+
 GOTO MENU
 
 ::::::::::::::::::::::::::::::::::::::::
