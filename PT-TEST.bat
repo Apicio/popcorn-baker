@@ -24,8 +24,7 @@ SET makeNsis=%makeNsis%
 
 :: POPCORN APP DOWNLOAD (no edits necessary)
 SET popcornUrl=https://github.com/popcorn-official/popcorn-app/archive/%PT_REPO%.zip
-SET nsisUrl=https://gist.githubusercontent.com/r0gger/e7184effd9dcca305c19/raw/02b01d443507f5f46514e2244fbe6a9a572df540/installer.nsi
-SET popcornZip=popcorn-app.zip
+SET nsisUrl=https://raw.githubusercontent.com/r0gger/popcorn-nsi/master/Modified/installer.nsi
 
 :: NODEJS VARS (no edits necessary)
 SET nodejsPath=%~dp0
