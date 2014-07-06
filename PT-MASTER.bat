@@ -203,7 +203,7 @@ IF EXIST "%INSTALLERWIN%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%
 IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 
 :: MOVE INSTALLER
-IF EXIST "%MOVEFROM%\Popcorn*.exe" RENAME "%MOVEFROM1%\Popcorn*.exe" "PopcornTimeSetup.exe"
+IF EXIST "%MOVEFROM%\Popcorn*.exe" RENAME "%MOVEFROM%\Popcorn*.exe" "PopcornTimeSetup.exe"
 IF EXIST "%MOVEFROM%\PopcornTimeSetup.exe" MOVE /Y "%MOVEFROM%\PopcornTimeSetup.exe" "%PUB%"
 
 :: CLEANUP
