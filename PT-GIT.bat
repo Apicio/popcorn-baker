@@ -195,7 +195,7 @@ IF NOT EXIST "%PUB%\" MKDIR "%PUB%"
 :: INSTALLER
 ECHO Creating Popcorn Time %PT_REPO1% - Installer...
 IF EXIST "%INST1%\installer.nsi" "%makeNsis%\makensis.exe" /V%VERBOSE% "%INST1%\installer.nsi"
-IF EXIST "%MOVEFROM1%\PopcornTime*.exe" RENAME "%MOVEFROM1%\PopcornTime*.exe" "PopcornTime-%PT_REPO1%.exe"
+IF EXIST "%MOVEFROM1%\Popcorn*.exe" RENAME "%MOVEFROM1%\Popcorn*.exe" "PopcornTime-%PT_REPO1%.exe"
 IF EXIST "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" MOVE /Y "%MOVEFROM1%\PopcornTime-%PT_REPO1%.exe" "%PUB%"
 
 :OPENEXPLORER
