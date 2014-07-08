@@ -241,7 +241,7 @@ explorer %PUB%
 GOTO EXIT
 
 :RUNSETUP
-START /B "" "%PUB%\PopcornTimeSetup.exe" >NUL 2>&1
+START /B "" "%PUB%\PopcornTimeSetup.exe" > nul
 GOTO EXIT
 
 ::::::::::::::::::::::::::::::::::::::::
