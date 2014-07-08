@@ -163,10 +163,10 @@ ECHO dim bStrm: Set bStrm = createobject("Adodb.Stream") >>%nsisVbs%
 ECHO xHttp.Open "GET", "%nsisUrl%", False >>%nsisVbs%
 ECHO xHttp.Send >>%nsisVbs%
 ECHO with bStrm >>%nsisVbs%
-ECHO     .type = 1 '//binary >>%nsisVbs%
+ECHO     .type = 1 >>%nsisVbs%
 ECHO     .open >>%nsisVbs%
 ECHO     .write xHttp.responseBody >>%nsisVbs%
-ECHO     .savetofile "%INSTALLERWIN%\installer.nsi", 2 ' >>%nsisVbs%
+ECHO     .savetofile "%INSTALLERWIN%\installer.nsi", 2 >>%nsisVbs%
 ECHO end with >>%nsisVbs%
 
 :: DOWNLOAD NSIS-SCRIPT
