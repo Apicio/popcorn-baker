@@ -273,7 +273,7 @@ IF EXIST "%MOVEFROM2%\PopcornTime-%PT_REPO2%.exe" MOVE /Y "%MOVEFROM2%\PopcornTi
 
 :OPENEXPLORER
 explorer %PUB% 
-goto MENU
+GOTO MENU
 
 :RUNSETUP
 START /B "" "%PUB%\PopcornTime-%PT_REPO2%.exe" > nul
